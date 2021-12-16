@@ -1,0 +1,35 @@
+h1 {
+    color: red;
+}
+
+#buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 8cm;
+    height: 8cm;
+}
+
+#display {
+    border: 3px solid black;
+    width: 296px;
+    height: 48px;
+    /* font-size: 16px; */
+    font-weight: 600;
+}
+
+#line1 {
+    font-size: 16px;
+    color: rgb(94, 94, 94);
+}
+
+#line2 {
+    font-size: 24px;
+}
+
+#calculator {
+    
+}
+
+#display {
+    direction: rtl;
+}
