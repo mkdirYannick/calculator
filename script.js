@@ -37,14 +37,23 @@ deleteBtn.addEventListener('click', function() {
     }
 })
 
+percentageBtn.addEventListener('click', function() {
+    if (line2.textContent && line2.textContent !== '0') {
+        console.log('test');
+        let num = Number(line2.textContent);
+        num = (num/100);
+        line2.textContent = num.toString();
+    }
+})
+
 numberButtons.forEach((button) => 
     button.addEventListener('click', function() {
         if (line2.textContent == '0') {
             line2.textContent = '';
-        } else if (result && !firstOperand) {
+        } if (result && !firstOperand) {
             clearFunction();
             line2.textContent = '';
-        } else if (firstOperand && operator) {
+        } if (firstOperand && operator) {
             line2.textContent = '';
         }
         line2.textContent += button.textContent;
