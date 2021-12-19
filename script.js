@@ -2,7 +2,8 @@ const numberButtons = document.querySelectorAll('.numberBtn');
 const operators = document.querySelectorAll('.operator');
 const clearBtn = document.getElementById('clear');
 const deleteBtn = document.getElementById('delete');
-const operator2 = document.getElementsByClassName('operator2');
+const decimal = document.getElementById('decimal');
+const inverseSign = document.getElementById('inverse');
 const equal = document.getElementById('equal');
 const display = document.getElementById('display');
 const line1 = document.getElementById('line1');
@@ -16,7 +17,7 @@ let result = '';
 
 function clearFunction() {
     line1.textContent = '';
-    line2.textContent = '';
+    line2.textContent = '0';
     firstOperand = '';
     secondOperand = '';
     operator = '';
@@ -26,12 +27,24 @@ function clearFunction() {
 
 clearBtn.addEventListener('click', clearFunction);
 
+deleteBtn.addEventListener('click', function() {
+    if (line2.textContent && line2.textContent !== '0') {
+        let strArray = Array.from(line2.textContent);
+        strArray.pop();
+        line2.textContent = strArray.join('');
+        firstOperand = '';
+        result = '';
+    }
+})
+
 numberButtons.forEach((button) => 
     button.addEventListener('click', function() {
-        if (result && !firstOperand) {
+        if (line2.textContent == '0') {
+            line2.textContent = '';
+        } else if (result && !firstOperand) {
             clearFunction();
-        }
-        if (firstOperand && operator) {
+            line2.textContent = '';
+        } else if (firstOperand && operator) {
             line2.textContent = '';
         }
         line2.textContent += button.textContent;
@@ -40,13 +53,17 @@ numberButtons.forEach((button) =>
 
 operators.forEach((button) => 
     button.addEventListener('click', function() {
-            if (result && !secondOperand) {
+            if (result && firstOperand && result == firstOperand) {
+                secondOperand = line2.textContent;
+                temporaryResult = operate(firstOperand, operator, secondOperand);
+                line2.textContent = temporaryResult;
+                operator = button.textContent;
+                line1.textContent = `${operator} ${temporaryResult}`;
+                firstOperand = temporaryResult;
+            } else if (result && !secondOperand) {
                 operator = button.textContent;
                 line1.textContent = `${operator} ${result}`;
                 firstOperand = result;
-                // secondOperand = line2.textContent;
-                // temporaryResult = operate(firstOperand, operator, secondOperand);
-                // line1.textContent = `${operator} ${temporaryResult}`;
 
             } else if (temporaryResult) {
                 secondOperand = line2.textContent;
@@ -72,26 +89,18 @@ operators.forEach((button) =>
     })
 );
 
-//test 2*2 = puis appuyer sur = = = = = devrais toujours multiplier par deux, ce n'est pas le cas actuellement.
-
 equal.addEventListener('click', function() {
-    // if (result && !firstOperand) {
-    //     console.log('BG ajd');
-    //     secondOperand = result;
-    //     result = operate(firstOperand, operator, secondOperand);
-    //     line1.textContent = `${operator} ${result}`;
-    //     line2.textContent = `${result}`;
-    // } else {
-        secondOperand = line2.textContent;
-        result = operate(firstOperand, operator, secondOperand);
-        line2.textContent = result;
-        line1.textContent = '';
-        // firstOperand = '';
-        secondOperand = '';
-        // operator = '';
-        temporaryResult = '';   
-    // }
-    
+        if (!operator) {
+            return;
+        } else {
+            secondOperand = line2.textContent;
+            result = operate(firstOperand, operator, secondOperand);
+            line2.textContent = result;
+            line1.textContent = '';
+            secondOperand = '';
+            temporaryResult = '';
+            firstOperand = '';
+        }   
 });
 
 function add(x, y) {
