@@ -38,6 +38,14 @@ deleteBtn.addEventListener('click', function() {
     }
 })
 
+inverseSign.addEventListener('click', function () {
+    if (line2.textContent != '0' && line2.textContent) {
+        let num = Number(line2.textContent);
+        num = -num;
+        line2.textContent = num;
+    }
+})
+
 percentageBtn.addEventListener('click', function() {
     if (line2.textContent && line2.textContent !== '0') {
         let num = Number(line2.textContent);
