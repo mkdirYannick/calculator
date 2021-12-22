@@ -2,7 +2,6 @@ const numberButtons = document.querySelectorAll('.numberBtn');
 const operators = document.querySelectorAll('.operator');
 const clearBtn = document.getElementById('clear');
 const deleteBtn = document.getElementById('delete');
-const decimal = document.getElementById('decimal');
 const inverseSign = document.getElementById('inverse');
 const equal = document.getElementById('equal');
 const display = document.getElementById('display');
@@ -14,6 +13,7 @@ let secondOperand = '';
 let operator = '';
 let temporaryResult = '';
 let result = '';
+let shouldReset = true;
 
 function clearFunction() {
     line1.textContent = '';
@@ -23,6 +23,7 @@ function clearFunction() {
     operator = '';
     result = '';
     temporaryResult = '';
+    shouldReset = true;
 }
 
 clearBtn.addEventListener('click', clearFunction);
@@ -39,22 +40,29 @@ deleteBtn.addEventListener('click', function() {
 
 percentageBtn.addEventListener('click', function() {
     if (line2.textContent && line2.textContent !== '0') {
-        console.log('test');
         let num = Number(line2.textContent);
         num = (num/100);
+            if (num.toString().length >= 10) {
+                num = num.toFixed(6);
+            }
         line2.textContent = num.toString();
     }
 })
 
 numberButtons.forEach((button) => 
     button.addEventListener('click', function() {
-        if (line2.textContent == '0') {
+        if (button.textContent == '.' && line2.textContent.includes('.')) {
+            return;
+        } else if (line2.textContent == '0' && button.textContent != '.') {
             line2.textContent = '';
-        } if (result && !firstOperand) {
+        } else if (result && !firstOperand) {
             clearFunction();
             line2.textContent = '';
-        } if (firstOperand && operator) {
+        } else if (firstOperand && operator && (shouldReset || temporaryResult)) {
             line2.textContent = '';
+            shouldReset = false;
+        } if (line2.textContent.length >= 16) {
+            return;
         }
         line2.textContent += button.textContent;
     })
@@ -69,6 +77,7 @@ operators.forEach((button) =>
                 operator = button.textContent;
                 line1.textContent = `${operator} ${temporaryResult}`;
                 firstOperand = temporaryResult;
+                
             } else if (result && !secondOperand) {
                 operator = button.textContent;
                 line1.textContent = `${operator} ${result}`;
@@ -109,6 +118,7 @@ equal.addEventListener('click', function() {
             secondOperand = '';
             temporaryResult = '';
             firstOperand = '';
+            shouldReset = true;
         }   
 });
 
@@ -131,16 +141,25 @@ function divide(x, y) {
 function operate(x, operator, y) {
     x = Number(x);
     y = Number(y);
-    switch (operator) {
-      case '+':
-        return add(x, y);
-    case '-':
-        return subtract(x, y);
-    case '*':
-        return multiply(x, y);
-    case '/':
-        return divide(x, y);
-    default:
-        return 'oops';   
+    let operateResult = 0;
+    if (operator == '+') {
+        operateResult = add(x, y);
+    } else if (operator == '-') {
+        operateResult = subtract(x, y);
+    } else if (operator == '*') {
+        operateResult = multiply(x, y);
+    } else if (operator == '÷') {
+        if (secondOperand == '0') {
+            return "LOL";
+        } else {
+          operateResult = divide(x, y);  
+        }
+    } else {
+        return 'Oops';
+    } if (operateResult >= 10**12) {
+       operateResult = operateResult.toExponential(); 
+    } else if (operateResult.toString().length >= 10) {
+        operateResult = operateResult.toFixed(6);
     }
+    return operateResult;
 }

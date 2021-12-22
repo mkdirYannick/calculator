@@ -3,19 +3,27 @@ body {
     flex-direction: column;
     align-items: center;
     height: 100vh;
-    background-color: ;
+    background-color: #E5E7EB;
 }
 
 h1 {
-    color: red;
+    color: black;
     margin-top: 48px;
-    margin-bottom: 64px;
+    margin-bottom: 74px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+}
+
+p {
+    margin-bottom: 36px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
 }
 
 #buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    width: 8cm;
+    /* width: 8cm; */
     height: 10cm;
     /* gap: 4px; */
     background-color: black;
@@ -23,30 +31,38 @@ h1 {
 
 #display {
     /* border: 3px solid black; */
-    width: 296px;
+    /* width: 296px; */
     height: 150px;
     /* font-size: 16px; */
     font-weight: 600;
+    text-align: right;
 }
 
 #line1 {
-    font-size: 22px;
-    color: rgb(94, 94, 94);
+    font-size: 26px;
+    color: rgb(170, 170, 170);
     height: 60px;
+    direction: rtl;
+    line-height: 60px;
+    vertical-align: middle;
 }
 
 #line2 {
-    font-size: 38px;
+    font-size: 34px;
     height: 90px;
+    line-height: 90px;
+    vertical-align: middle;
 }
 
 #calculator {
+    background-color: black;
     border: 8px solid black;
     border-radius: 12px;
-}
-
-#display {
-    direction: rtl;
+    width: 9cm;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: bolder;
+    color: white;
+    box-shadow: 16px 10px 12px rgb(80, 80, 80);
 }
 
 #equal {
@@ -58,7 +74,8 @@ h1 {
 .numberBtn,#decimal,#inverse {
     background-color: rgb(75, 75, 75);
     color: white;
-    font-size: 16px;
+    font-size: 26px;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 .operator {
@@ -71,8 +88,15 @@ h1 {
 button {
     /* border-radius: 16px; */
     border: solid black 1px;
-    transition: transform 0.04s;
+    /* transition: transform 0.04s; */
     border-radius: 4px;
+    font-family: inherit;
+    font-size: 1em;
+}
+
+button:hover {
+    /* transform: scale(1.025); */
+    border: solid white 1px;
 }
 
 #clear,#delete,#percentage {
@@ -80,7 +104,14 @@ button {
     color: white;
 }
 
-button:hover {
-    transform: scale(1.025);
-    border: solid white 1px;
+#clear,#delete,#percentage,.numberBtn,#decimal,#inverse,.operator,#equal {
+    font-size: 24px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+#delete img {
+    /* display: block; */
+    height: 20px;
+    width: 28px;
 }
