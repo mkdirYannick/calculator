@@ -14,6 +14,7 @@ let operator = '';
 let temporaryResult = '';
 let result = '';
 let shouldReset = true;
+let isOperator = false;
 
 function clearFunction() {
     line1.textContent = '';
@@ -22,7 +23,6 @@ function clearFunction() {
     secondOperand = '';
     operator = '';
     result = '';
-    temporaryResult = '';
     shouldReset = true;
 }
 
@@ -33,8 +33,8 @@ deleteBtn.addEventListener('click', function() {
         let strArray = Array.from(line2.textContent);
         strArray.pop();
         line2.textContent = strArray.join('');
-        firstOperand = '';
-        result = '';
+        // firstOperand = '';
+        // result = '';
     }
 })
 
@@ -66,7 +66,8 @@ numberButtons.forEach((button) =>
         } else if (result && !firstOperand) {
             clearFunction();
             line2.textContent = '';
-        } else if (firstOperand && operator && (shouldReset || temporaryResult)) {
+            // Essayer avec should reset tout seul
+        } else if (firstOperand && operator && shouldReset) {
             line2.textContent = '';
             shouldReset = false;
         } if (line2.textContent.length >= 16) {
@@ -76,42 +77,31 @@ numberButtons.forEach((button) =>
     })
 );
 
-operators.forEach((button) => 
-    button.addEventListener('click', function() {
-            if (result && firstOperand && result == firstOperand) {
-                secondOperand = line2.textContent;
-                temporaryResult = operate(firstOperand, operator, secondOperand);
-                line2.textContent = temporaryResult;
-                operator = button.textContent;
-                line1.textContent = `${operator} ${temporaryResult}`;
-                firstOperand = temporaryResult;
-                
-            } else if (result && !secondOperand) {
-                operator = button.textContent;
-                line1.textContent = `${operator} ${result}`;
-                firstOperand = result;
+operators.forEach((button) => button.addEventListener('click', function() {
+        // Handles the basic case.
+        if (!firstOperand) {
+        operator = button.textContent;
+        firstOperand = line2.textContent;
+        line1.textContent = `${firstOperand} ${operator}`;
 
-            } else if (temporaryResult) {
-                secondOperand = line2.textContent;
-                temporaryResult = operate(firstOperand, operator, secondOperand);
-                line2.textContent = temporaryResult;
-                operator = button.textContent;
-                line1.textContent = `${operator} ${temporaryResult}`;
-                firstOperand = temporaryResult; 
-
-            } else if (firstOperand && operator && !secondOperand) {
-                secondOperand = line2.textContent;
-                temporaryResult = operate(firstOperand, operator, secondOperand);
-                line2.textContent = temporaryResult;
-                operator = button.textContent;
-                line1.textContent = `${operator} ${temporaryResult}`;
-                firstOperand = temporaryResult;
-
-            } else if (!secondOperand) {
-                operator = button.textContent;
-                firstOperand = line2.textContent;
-                line1.textContent = `${operator} ${firstOperand}`;
-            }
+        // Allows to chain multiple operations in a row before hitting the equal sign.
+        } else if (firstOperand && operator && !secondOperand) {
+            secondOperand = line2.textContent;
+            firstOperand = operate(firstOperand, operator, secondOperand);
+            line2.textContent = firstOperand;
+            operator = button.textContent;
+            line1.textContent = `${firstOperand} ${operator}`;
+            shouldReset = true;
+            secondOperand = '';
+        // Automatically uses the result as a first operand if the user press an operator
+        // button after using the equal sign. 
+        } else if (result && !secondOperand) {
+            operator = button.textContent;
+            line1.textContent = `${result} ${operator}`;
+            firstOperand = result;
+        } else {
+            return;
+        }
     })
 );
 
@@ -121,13 +111,15 @@ equal.addEventListener('click', function() {
         } else {
             secondOperand = line2.textContent;
             result = operate(firstOperand, operator, secondOperand);
-            line2.textContent = result;
-            line1.textContent = '';
-            secondOperand = '';
-            temporaryResult = '';
-            firstOperand = '';
-            shouldReset = true;
-        }   
+            if (result) {
+                line2.textContent = result;
+                line1.textContent = `${firstOperand} ${operator} ${secondOperand} =`;
+                secondOperand = '';
+                temporaryResult = '';
+                firstOperand = '';
+                shouldReset = true;
+        }    
+    }           
 });
 
 function add(x, y) {
@@ -154,11 +146,12 @@ function operate(x, operator, y) {
         operateResult = add(x, y);
     } else if (operator == '-') {
         operateResult = subtract(x, y);
-    } else if (operator == '*') {
+    } else if (operator == 'x') {
         operateResult = multiply(x, y);
     } else if (operator == '÷') {
-        if (secondOperand == '0') {
-            return "LOL";
+        if (secondOperand == '0' || secondOperand == '0.') {
+            alert('LOL');
+            clearFunction();
         } else {
           operateResult = divide(x, y);  
         }
