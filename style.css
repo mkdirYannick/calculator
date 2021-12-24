@@ -8,48 +8,43 @@ body {
 
 h1 {
     color: black;
-    margin-top: 48px;
-    margin-bottom: 74px;
+    margin-top: 15mm;
+    margin-bottom: 15mm;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 28px;
+    font-size: 7mm;
 }
 
 p {
     margin-bottom: 36px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 24px;
+    font-size: 7mm;
 }
 
 #buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    /* width: 8cm; */
-    height: 10cm;
-    /* gap: 4px; */
+    height: 100mm;
     background-color: black;
 }
 
 #display {
-    /* border: 3px solid black; */
-    /* width: 296px; */
-    height: 150px;
-    /* font-size: 16px; */
+    height: 35mm;
     font-weight: 600;
     text-align: right;
 }
 
 #line1 {
-    font-size: 26px;
+    font-size: 7mm;
     color: rgb(170, 170, 170);
-    height: 60px;
-    line-height: 60px;
+    height: 15mm;
+    line-height: 15mm;
     vertical-align: middle;
 }
 
 #line2 {
-    font-size: 34px;
-    height: 90px;
-    line-height: 90px;
+    font-size: 10mm;
+    height: 20mm;
+    line-height: 20mm;
     vertical-align: middle;
 }
 
@@ -67,34 +62,27 @@ p {
 #equal {
     background-color: rgb(212, 0, 0);
     font-weight: bolder;
-    font-size: 16px;
 }
 
 .numberBtn,#decimal,#inverse {
     background-color: rgb(75, 75, 75);
     color: white;
-    font-size: 26px;
     font-family: 'Segoe UI', sans-serif;
 }
 
 .operator {
     background-color: rgb(25, 25, 25);
     color: white;
-    /* font-weight: bolder; */
     font-size: 16px;
 }
 
 button {
-    /* border-radius: 16px; */
     border: solid black 1px;
-    /* transition: transform 0.04s; */
     border-radius: 4px;
     font-family: inherit;
-    font-size: 1em;
 }
 
 button:hover {
-    /* transform: scale(1.025); */
     border: solid white 1px;
 }
 
@@ -104,13 +92,12 @@ button:hover {
 }
 
 #clear,#delete,#percentage,.numberBtn,#decimal,#inverse,.operator,#equal {
-    font-size: 24px;
+    font-size: 7mm;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
 }
 
 #delete img {
-    /* display: block; */
-    height: 20px;
-    width: 28px;
+    height: 5mm;
+    width: 7.5mm;
 }

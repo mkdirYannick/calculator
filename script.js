@@ -57,11 +57,10 @@ percentageBtn.addEventListener('click', function() {
     }
 })
 
-numberButtons.forEach((button) => 
-    button.addEventListener('click', function() {
-        if (button.textContent == '.' && line2.textContent.includes('.')) {
+numberButtons.forEach((e) => e.addEventListener('click', function() {
+        if (e.textContent == '.' && line2.textContent.includes('.')) {
             return;
-        } else if (line2.textContent == '0' && button.textContent != '.') {
+        } else if (line2.textContent == '0' && e.textContent != '.') {
             line2.textContent = '';
         } else if (result && !firstOperand) {
             clearFunction();
@@ -73,7 +72,7 @@ numberButtons.forEach((button) =>
         } if (line2.textContent.length >= 16) {
             return;
         }
-        line2.textContent += button.textContent;
+        line2.textContent += e.textContent;
     })
 );
 
@@ -84,15 +83,19 @@ operators.forEach((button) => button.addEventListener('click', function() {
         firstOperand = line2.textContent;
         line1.textContent = `${firstOperand} ${operator}`;
 
+        // } else if (firstOperand && !secondOperand) {
+        //     operator = button.textContent;
+        //     line1.textContent = `${firstOperand} ${operator}`;
+        // }
+
         // Allows to chain multiple operations in a row before hitting the equal sign.
-        } else if (firstOperand && operator && !secondOperand) {
+        } else if (firstOperand) {
             secondOperand = line2.textContent;
             firstOperand = operate(firstOperand, operator, secondOperand);
             line2.textContent = firstOperand;
             operator = button.textContent;
             line1.textContent = `${firstOperand} ${operator}`;
             shouldReset = true;
-            secondOperand = '';
         // Automatically uses the result as a first operand if the user press an operator
         // button after using the equal sign. 
         } else if (result && !secondOperand) {
@@ -164,3 +167,76 @@ function operate(x, operator, y) {
     }
     return operateResult;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// This part is for the keyboard input.
+
+// I'm on to something with this !
+window.addEventListener("keydown", function (e) {
+    if (e.defaultPrevented) {
+        return;
+    }
+    switch (e.key) {
+        case '0':
+            document.getElementById("0").click();
+            break;
+        case '1':
+            document.getElementById("1").click();
+            break;
+        case '2':
+            document.getElementById("2").click();
+            break;
+        case '3':
+            document.getElementById("3").click();
+            break;
+        case '4':
+            document.getElementById("4").click();
+            break;
+        case '5':
+            document.getElementById("5").click();
+            break;
+        case '6':
+            document.getElementById("6").click();
+            break;
+        case '7':
+            document.getElementById("7").click();
+            break;
+        case '8':
+            document.getElementById("8").click();
+            break;
+        case '9':
+            document.getElementById("9").click();
+            break;
+        case '.':
+            document.getElementById(".").click();
+            break;
+        case 'Delete':
+            document.getElementById("clear").click();
+            break;
+        case 'Backspace':
+            document.getElementById("delete").click();
+            break;
+        case '%':
+            document.getElementById("percentage").click();
+            break;
+        case 'Enter':
+            document.getElementById("equal").click();
+            break;
+        case '+':
+            document.getElementById("+").click();
+            break;
+        case '-':
+            document.getElementById("-").click();
+            break;
+        case '*':
+            document.getElementById("*").click();
+            break;
+        case '/':
+            document.getElementById("/").click();
+            break;
+        
+    }
+})

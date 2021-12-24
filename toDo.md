@@ -1,6 +1,6 @@
 A faire :
 
-- Bug quand j'appui deux fois de suite sur un opérateur (idée : créer une variable true/false)
-- Accessible par le clavier (idée : prendre chaque fonction anonyme dans les addeventlistener
-et en faire des fonction à part entière puis les associés à différents event listener, boutton ou clavier).
-- Partie CSS (font size en cm ou mm pour être sût que ça reste dans le champs.)
+Almost done !
+
+- Trouver comment désactiver le shortcut lorsqu'on appuie sur "/"
+- Bug quand j'appuie deux fois de suite sur un signe opération
