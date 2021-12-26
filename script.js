@@ -92,7 +92,7 @@ operators.forEach((button) => button.addEventListener('click', function() {
         line1.textContent = `${firstOperand} ${operator}`;
         lastButtonOperator = true;
 
-        // Allows to chain multiple operations in a row before hitting the equal sign.
+        // Allows to chain multiple operations in a row.
         } else if (firstOperand) {
             secondOperand = line2.textContent;
             firstOperand = operate(firstOperand, operator, secondOperand);
@@ -101,8 +101,9 @@ operators.forEach((button) => button.addEventListener('click', function() {
             line1.textContent = `${firstOperand} ${operator}`;
             shouldReset = true;
             lastButtonOperator = true;
+
         // Automatically uses the result as a first operand if the user press an operator
-        // button after using the equal sign. 
+        // button after using the equal button. 
         } else if (result && !secondOperand) {
             operator = button.textContent;
             line1.textContent = `${result} ${operator}`;
@@ -115,7 +116,7 @@ operators.forEach((button) => button.addEventListener('click', function() {
 );
 
 equal.addEventListener('click', function() {
-        if (!operator) {
+        if (!operator || !firstOperand) {
             return;
         } else {
             secondOperand = line2.textContent;
@@ -217,6 +218,9 @@ window.addEventListener("keydown", function (e) {
             document.getElementById("9").click();
             break;
         case '.':
+            document.getElementById(".").click();
+            break;
+        case ',':
             document.getElementById(".").click();
             break;
         case 'Delete':

@@ -14,12 +14,6 @@ h1 {
     font-size: 7mm;
 }
 
-p {
-    margin-bottom: 36px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 7mm;
-}
-
 #buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
