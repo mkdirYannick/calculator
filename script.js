@@ -14,7 +14,7 @@ let operator = '';
 let temporaryResult = '';
 let result = '';
 let shouldReset = true;
-let isOperator = false;
+let lastButtonOperator = false;
 
 function clearFunction() {
     line1.textContent = '';
@@ -24,6 +24,7 @@ function clearFunction() {
     operator = '';
     result = '';
     shouldReset = true;
+    lastButtonOperator = false;
 }
 
 clearBtn.addEventListener('click', clearFunction);
@@ -33,9 +34,8 @@ deleteBtn.addEventListener('click', function() {
         let strArray = Array.from(line2.textContent);
         strArray.pop();
         line2.textContent = strArray.join('');
-        // firstOperand = '';
-        // result = '';
     }
+    lastButtonOperator = false;
 })
 
 inverseSign.addEventListener('click', function () {
@@ -44,6 +44,7 @@ inverseSign.addEventListener('click', function () {
         num = -num;
         line2.textContent = num;
     }
+    lastButtonOperator = false;
 })
 
 percentageBtn.addEventListener('click', function() {
@@ -55,6 +56,7 @@ percentageBtn.addEventListener('click', function() {
             }
         line2.textContent = num.toString();
     }
+    lastButtonOperator = false;
 })
 
 numberButtons.forEach((e) => e.addEventListener('click', function() {
@@ -73,20 +75,22 @@ numberButtons.forEach((e) => e.addEventListener('click', function() {
             return;
         }
         line2.textContent += e.textContent;
+        lastButtonOperator = false;
     })
 );
 
 operators.forEach((button) => button.addEventListener('click', function() {
+        // Allows the user to change the operator.
+        if (lastButtonOperator) {
+            operator = button.textContent;
+            line1.textContent = `${firstOperand} ${operator}`;
+        
         // Handles the basic case.
-        if (!firstOperand) {
+        } else if (!firstOperand) {
         operator = button.textContent;
         firstOperand = line2.textContent;
         line1.textContent = `${firstOperand} ${operator}`;
-
-        // } else if (firstOperand && !secondOperand) {
-        //     operator = button.textContent;
-        //     line1.textContent = `${firstOperand} ${operator}`;
-        // }
+        lastButtonOperator = true;
 
         // Allows to chain multiple operations in a row before hitting the equal sign.
         } else if (firstOperand) {
@@ -96,12 +100,14 @@ operators.forEach((button) => button.addEventListener('click', function() {
             operator = button.textContent;
             line1.textContent = `${firstOperand} ${operator}`;
             shouldReset = true;
+            lastButtonOperator = true;
         // Automatically uses the result as a first operand if the user press an operator
         // button after using the equal sign. 
         } else if (result && !secondOperand) {
             operator = button.textContent;
             line1.textContent = `${result} ${operator}`;
             firstOperand = result;
+            lastButtonOperator = true;
         } else {
             return;
         }
@@ -121,6 +127,7 @@ equal.addEventListener('click', function() {
                 temporaryResult = '';
                 firstOperand = '';
                 shouldReset = true;
+                lastButtonOperator = false;
         }    
     }           
 });
@@ -174,7 +181,6 @@ function operate(x, operator, y) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // This part is for the keyboard input.
 
-// I'm on to something with this !
 window.addEventListener("keydown", function (e) {
     if (e.defaultPrevented) {
         return;
